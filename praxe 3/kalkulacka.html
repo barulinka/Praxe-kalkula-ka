@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulačka</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            width: 48px;
+            height: 48px;
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 4px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #d4d4d4;
+        }
+
+        input[type="button"].operator {
+            background-color: #6e69b6;
+            color: #fff;
+        }
+
+        input[type="button"].operator:hover {
+            background-color: #4f2579;
+        }
+
+        input[type="button"].larger {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="calculator">
+    <input type="text" id="display" readonly>
+    <br>
+    <input type="button" value="!" class="operator" onclick="calculateFactorial()">
+    <input type="button" value="Fib" class="operator" onclick="calculateFibonacci()">
+    <input type="button" value="cos" class="operator" onclick="calculateCos()">
+    <input type="button" value="sin" class="operator" onclick="calculateSin()">
+    <input type="button" value="log" class="operator" onclick="calculateLog()">
+    <br>
+    <input type="button" value="7" onclick="appendToDisplay('7')">
+    <input type="button" value="8" onclick="appendToDisplay('8')">
+    <input type="button" value="9" onclick="appendToDisplay('9')">
+    <input type="button" value="/" class="operator" onclick="appendToDisplay('/')">
+    <br>
+    <input type="button" value="4" onclick="appendToDisplay('4')">
+    <input type="button" value="5" onclick="appendToDisplay('5')">
+    <input type="button" value="6" onclick="appendToDisplay('6')">
+    <input type="button" value="-" class="operator" onclick="appendToDisplay('-')">
+    <br>
+    <input type="button" value="1" onclick="appendToDisplay('1')">
+    <input type="button" value="2" onclick="appendToDisplay('2')">
+    <input type="button" value="3" onclick="appendToDisplay('3')">
+    <input type="button" value="+" class="operator" onclick="appendToDisplay('+')">
+    <br>
+    <input type="button" value="0" onclick="appendToDisplay('0')">
+    <input type="button" value="." onclick="appendToDisplay('.')">
+    <input type="button" value="*" class="operator" onclick="appendToDisplay('*')">
+    <input type="button" value="=" class="operator" onclick="calculate()">
+    <br>
+    <input type="button" value="C" class="operator larger" onclick="clearDisplay()">
+</div>
+
+<script>
+    function appendToDisplay(value) {
+        document.getElementById('display').value += value;
+    }
+
+    function calculate() {
+        try {
+            document.getElementById('display').value = eval(document.getElementById('display').value);
+        } catch (error) {
+            document.getElementById('display').value = 'Error';
+        }
+    }
+
+    function clearDisplay() {
+        document.getElementById('display').value = '';
+    }
+
+    function calculateFactorial() {
+        const input = parseFloat(document.getElementById('display').value);
+        if (!isNaN(input) && Number.isInteger(input) && input >= 0) {
+            let result = 1;
+            for (let i = 2; i <= input; i++) {
+                result *= i;
+            }
+            document.getElementById('display').value = result;
+        } else {
+            document.getElementById('display').value = 'Invalid input';
+        }
+    }
+
+    function calculateFibonacci() {
+        const n = parseInt(document.getElementById('display').value);
+        if (!isNaN(n) && Number.isInteger(n) && n >= 0) {
+            let a = 0, b = 1;
+            for (let i = 2; i <= n; i++) {
+                const temp = a + b;
+                a = b;
+                b = temp;
+            }
+            document.getElementById('display').value = b;
+        } else {
+            document.getElementById('display').value = 'Invalid input';
+        }
+    }
+
+    function calculateCos() {
+        const angle = parseFloat(document.getElementById('display').value);
+        if (!isNaN(angle)) {
+            document.getElementById('display').value = Math.cos(angle * Math.PI / 180);
+        } else {
+            document.getElementById('display').value = 'Invalid input';
+        }
+    }
+
+    function calculateSin() {
+        const angle = parseFloat(document.getElementById('display').value);
+        if (!isNaN(angle)) {
+            document.getElementById('display').value = Math.sin(angle * Math.PI / 180);
+        } else {
+            document.getElementById('display').value = 'Invalid input';
+        }
+    }
+
+    function calculateLog() {
+        const num = parseFloat(document.getElementById('display').value);
+        if (!isNaN(num) && num > 0) {
+            document.getElementById('display').value = Math.log10(num);
+        } else {
+            document.getElementById('display').value = 'Invalid input';
+        }
+    }
+</script>
+
+</body>
+</html>
